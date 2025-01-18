@@ -4,53 +4,69 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import useLocation from "../../hooks/useLocation";
 import { LocationObjectCoords } from "expo-location";
 import { BusStopType } from "../../constants/BusData";
+import MapViewDirections from "react-native-maps-directions";
 
 export default function App() {
   const { coords } = useLocation();
-  const [location, setLocation] = useState<LocationObjectCoords | undefined>();
+  const [selectedRoute, setSelectedRoute] = useState();
+  const [busStops, setBusStops] = useState<BusStopType[]>([]);
 
-  const busStops: BusStopType[] = [
-    {
-      route: "M14",
-      routeColor: "aqua",
-      coords: {
-        latitude: 42.255,
-        longitude: -71.795,
-      },
-    },
-  ];
-
+  // FUCKING HORROR SHOW
   useEffect(() => {
-    setLocation(coords);
-  }, [coords]);
+    const data: BusStopType[] = [
+      {
+        route: "M14",
+        routeColor: "aqua",
+        coords: {
+          latitude: 42.255,
+          longitude: -71.795,
+        },
+      },
+      {
+        route: "M14",
+        routeColor: "aqua",
+        coords: {
+          latitude: 42.257,
+          longitude: -71.79,
+        },
+      },
+    ];
+    setBusStops(data);
+    setTimeout(() => setBusStops([...data]), 250);
+  }, []);
 
   return (
     <View className="flex-1 gap-4 overflow-hidden pt-20 items-center justify-center bg-gray-800">
       <MapView
         style={styles.map}
+        showsUserLocation
         initialRegion={
-          location && {
-            ...location,
+          coords && {
+            ...coords,
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }
         }>
-        <Marker coordinate={location ?? { latitude: 0, longitude: 0 }} />
-        {busStops.map((stop, index) => (
-          <Marker
-            key={`coordinate_${index}`}
-            coordinate={stop.coords}
-            pinColor={stop.routeColor}
+        {busStops.map(
+          (stop, index) =>
+            stop.route === selectedRoute && (
+              <Marker
+                key={`coordinate_${index}`}
+                coordinate={stop.coords}
+                pinColor={stop.routeColor}
+              />
+            )
+        )}
+        {process.env.EXPO_PUBLIC_MAPS_API_KEY && busStops.length > 0 && (
+          <MapViewDirections
+            origin={busStops[0].coords}
+            destination={busStops[busStops.length - 1].coords}
+            waypoints={busStops.slice(1, -1).map((b) => b.coords)}
+            apikey={process.env.EXPO_PUBLIC_MAPS_API_KEY}
+            strokeWidth={3}
+            strokeColor={busStops[0].routeColor}
           />
-        ))}
-        {/*
-        <MapViewDirections
-          origin={coordinates[0]}
-          destination={coordinates[1]}
-          strokeWidth={3}
-          strokeColor="hotpink"
-          apikey={process.env.EXPO_PUBLIC_MAPS_API_KEY ?? ""}
-        /> */}
+        )}
       </MapView>
     </View>
   );
