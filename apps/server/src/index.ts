@@ -2,6 +2,9 @@ import { Hono } from 'hono'
 import { serve } from '@hono/node-server'
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 import { appRouter, createTRPCContext } from "@goathacks/trpc"
+import { config } from 'dotenv';
+
+config()
 
 const app = new Hono()
 

@@ -1,10 +1,12 @@
 import { initTRPC } from "@trpc/server";
 import SuperJSON from "superjson";
 import { type Context as HonoContext } from "hono";
+import { db } from  "@goathacks/db"
 
 export const createTRPCContext = (ctx: HonoContext) => {
   return {
     honoCtx: ctx,
+    db: db
   };
 };
 
