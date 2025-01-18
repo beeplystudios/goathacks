@@ -7,9 +7,11 @@ import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
+import { setStatusBarHidden } from "expo-status-bar";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  setStatusBarHidden(true);
 
   return (
     <Tabs
@@ -18,6 +20,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
+        headerStatusBarHeight: 0,
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
