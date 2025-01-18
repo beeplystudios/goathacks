@@ -4,24 +4,16 @@
   "description": "",
   "private": true,
   "scripts": {
-<<<<<<< HEAD
     "mobile:dev": "yarn workspace @goathacks/mobile start",
     "server:dev": "yarn workspace @goathacks/server start",
-    "expo_install": "cd apps/mobile && yarn expo install ${0} && cd ../../"
-  },
-  "keywords": [],
-  "workspaces": ["apps/*", "packages/*"],
-=======
-    "dev": "yarn workspace @goathacks/mobile start-no-ngrok",
-    "mobile:dev": "yarn workspace @goathacks/mobile start",
-    "server:dev": "yarn workspace @goathacks/server start"
+    "expo_install": "cd apps/mobile && yarn expo install ${0} && cd ../../",
+    "dev": "yarn workspace @goathacks/mobile start-no-ngrok"
   },
   "keywords": [],
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
->>>>>>> e37285d74ff0bb9d911133ffa4e487b75cf7d9d0
   "author": "",
   "license": "ISC"
 }

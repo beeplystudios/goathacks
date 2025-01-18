@@ -18,7 +18,7 @@ export default function TabLayout() {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: 'https://88fb-68-116-196-69.ngrok-free.app/trpc',
+          url: `${process.env.EXPO_PUBLIC_API_URL}/trpc`,
           // You can pass any HTTP headers you wish here
           // async headers() {
           //   return {
