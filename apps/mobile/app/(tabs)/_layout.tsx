@@ -1,4 +1,4 @@
-import { Tabs, useFocusEffect } from "expo-router";
+import { Tabs } from "expo-router";
 import React, { useState } from "react";
 import { Platform } from "react-native";
 
@@ -25,54 +25,61 @@ export default function TabLayout() {
           //     authorization: getAuthCookie(),
           //   };
           // },
-          transformer: SuperJSON
+          transformer: SuperJSON,
         }),
       ],
-    }),
+    })
   );
   const colorScheme = useColorScheme();
- 
-  return (
-        <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
- 
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "dark"].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        headerStatusBarHeight: 0,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-            borderTopWidth: 0,
-          },
-          default: { borderTopWidth: 0 },
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="grid-outline" size={24} color={color} />
-          ),
-          title: "Projects",
-        }}
-      />
-      <Tabs.Screen
-        name="camera"
-        options={{
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="camera-outline" size={24} color={color} />
-          ),
-          title: "Camera",
-        }}
-      />
-    </Tabs>
-          </QueryClientProvider>
-    </trpc.Provider>
 
+  return (
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <Tabs
+          screenOptions={{
+            tabBarActiveTintColor: Colors[colorScheme ?? "dark"].tint,
+            headerShown: false,
+            tabBarButton: HapticTab,
+            tabBarBackground: TabBarBackground,
+            headerStatusBarHeight: 0,
+            tabBarStyle: Platform.select({
+              ios: {
+                // Use a transparent background on iOS to show the blur effect
+                position: "absolute",
+                borderTopWidth: 0,
+              },
+              default: { borderTopWidth: 0 },
+            }),
+          }}>
+          <Tabs.Screen
+            name="index"
+            options={{
+              tabBarIcon: ({ color }) => (
+                <Ionicons name="map" size={24} color={color} />
+              ),
+              title: "Go",
+            }}
+          />
+          <Tabs.Screen
+            name="driver"
+            options={{
+              tabBarIcon: ({ color }) => (
+                <Ionicons name="bus" size={24} color={color} />
+              ),
+              title: "Drive",
+            }}
+          />
+          <Tabs.Screen
+            name="profile"
+            options={{
+              tabBarIcon: ({ color }) => (
+                <Ionicons name="person" size={24} color={color} />
+              ),
+              title: "Profile",
+            }}
+          />
+        </Tabs>
+      </QueryClientProvider>
+    </trpc.Provider>
   );
 }
