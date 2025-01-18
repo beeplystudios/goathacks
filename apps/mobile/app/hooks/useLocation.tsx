@@ -5,7 +5,12 @@ import * as Device from "expo-device";
 
 import * as Location from "expo-location";
 
-export default function App() {
+export interface LocationType {
+  coords?: Location.LocationObjectCoords;
+  error?: string | null;
+}
+
+export default function useLocation() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
   );
@@ -32,30 +37,6 @@ export default function App() {
     getCurrentLocation();
   }, []);
 
-  let text = "Waiting...";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>{text}</Text>
-    </View>
-  );
+  const res: LocationType = { ...location, error: errorMsg };
+  return res;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 20,
-  },
-  paragraph: {
-    fontSize: 18,
-    textAlign: "center",
-    color: "white",
-  },
-});
