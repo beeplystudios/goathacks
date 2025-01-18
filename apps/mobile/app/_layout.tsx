@@ -1,8 +1,9 @@
-import "../global.css"
+import "../global.css";
 import { Stack } from "expo-router";
 import { setStatusBarHidden, StatusBar } from "expo-status-bar";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
 import { tokenCache } from "@/../cache";
+import { Platform } from "react-native";
 
 const RootLayout = () => {
   setStatusBarHidden(true);
@@ -19,16 +20,19 @@ const RootLayout = () => {
         <Stack>
           <Stack.Screen
             name="(tabs)"
-            options={{ headerShown: false, statusBarHidden: true }}
+            options={{
+              headerShown: false,
+              statusBarHidden: Platform.OS !== "ios",
+            }}
           />
-            <Stack.Screen
-                name="check-in"
-                options={{
-                presentation: 'modal',
-                statusBarHidden: true,
-                headerShown: false
-                }}
-            />
+          <Stack.Screen
+            name="check-in"
+            options={{
+              presentation: "modal",
+              statusBarHidden: true,
+              headerShown: false,
+            }}
+          />
           <StatusBar hidden />
         </Stack>
       </ClerkLoaded>

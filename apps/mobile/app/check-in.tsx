@@ -8,18 +8,20 @@ export default function Modal() {
   const [permission, requestPermission] = useCameraPermissions();
 
   if (!permission) {
-    return <View />
+    return <View />;
   }
 
   if (!permission.granted) {
     return (
       <SafeAreaView>
-        <View>We need permission to use your camera</View>
+        <View>
+          <Text>We need permission to use your camera</Text>
+        </View>
         <Pressable onPress={requestPermission}>
           <Text>Grant Permission</Text>
         </Pressable>
       </SafeAreaView>
-    )
+    );
   }
 
   return (
@@ -33,9 +35,9 @@ export default function Modal() {
               id: evt.data
             }
           }) 
-        }}>
+        }}> 
         </CameraView>
       </View>
-    </SafeAreaView> 
+    </SafeAreaView>
   );
 }
