@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import ThemedView from "../../components/ThemedView";
-import { trpc } from "../../lib/trpc";
+import ThemedView from "../../../components/ThemedView";
+import { trpc } from "../../../lib/trpc";
 import { StyleSheet, View, Text, Button, Pressable } from "react-native";
 import { verifyInstallation } from "nativewind";
 import { Linking, Platform } from "react-native";
@@ -27,7 +27,6 @@ export const openMap = ({ lat, lng, label }: OpenMapArgs) => {
 
 export default function TabTwoScreen() {
   verifyInstallation();
-  const [data] = trpc.rat.useSuspenseQuery();
 
   return (
     <SafeAreaView className="">
@@ -39,6 +38,13 @@ export default function TabTwoScreen() {
             className="bg-[##5DA8EC] flex text-center items-center p-2 rounded-md border-[0.0125rem] ">
             <Text className="font-bold">Check In</Text>
           </Link>
+          <Link
+            href={{
+              pathname: "/(tabs)/driver/route/[id]/go",
+              params: {
+                id: "cm62ksg1g00000cjl2k9cd0z",
+              },
+            }}></Link>
         </View>
       </View>
     </SafeAreaView>

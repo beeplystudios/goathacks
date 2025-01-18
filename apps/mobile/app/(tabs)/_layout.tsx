@@ -57,14 +57,14 @@ export default function TabLayout() {
             }}
           />
           <Tabs.Screen
-            name="driver"
+            name="driver/index"
             options={{
               tabBarIcon: ({ color }) => (
                 <Ionicons name="bus" size={24} color={color} />
               ),
               title: "Drive",
             }}
-          />
+          /> 
           <Tabs.Screen
             name="profile"
             options={{
@@ -74,7 +74,9 @@ export default function TabLayout() {
               title: "Profile",
             }}
           />
+          <Tabs.Screen name="driver/route/[id]" options={{href: null}}></Tabs.Screen>
         </Tabs>
+        
       </QueryClientProvider>
     </trpc.Provider>
   );
