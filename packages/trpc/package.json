@@ -11,7 +11,11 @@
     "@goathacks/db": "*",
     "@hono/node-server": "^1.13.7",
     "@trpc/server": "^11.0.0-rc.700",
+    "@types/html-to-text": "^9.0.4",
+    "drizzle-orm": "^0.38.4",
     "hono": "^4.6.16",
-    "superjson": "^2.2.2"
+    "html-to-text": "^9.0.5",
+    "superjson": "^2.2.2",
+    "zod": "^3.24.1"
   }
 }

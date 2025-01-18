@@ -1,8 +1,10 @@
 import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CameraView, useCameraPermissions } from "expo-camera";
+import { Link, useRouter } from "expo-router";
 
 export default function Modal() {
+  const router = useRouter();
   const [permission, requestPermission] = useCameraPermissions();
 
   if (!permission) {
@@ -25,6 +27,12 @@ export default function Modal() {
       <View className="h-screen">
         <CameraView facing="back" style={{height: "50%"}} onBarcodeScanned={evt => {
           console.log(evt.data)
+          router.replace({
+            pathname: "/driver/route/[id]",
+            params: {
+              id: evt.data
+            }
+          }) 
         }}>
         </CameraView>
       </View>
