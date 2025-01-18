@@ -1,8 +1,10 @@
+import { SafeAreaView } from "react-native-safe-area-context";
 import ThemedView from "../../components/ThemedView";
 import { trpc } from "../../lib/trpc";
-import { StyleSheet, View, Text, Button } from "react-native";
-
+import { StyleSheet, View, Text, Button, Pressable } from "react-native";
+import { verifyInstallation } from 'nativewind'
 import {Linking, Platform} from 'react-native';
+import { Link } from "expo-router";
 
 export type OpenMapArgs = {
   lat: string | number;
@@ -24,13 +26,20 @@ export const openMap = ({lat, lng, label}: OpenMapArgs) => {
 };
 
 export default function TabTwoScreen() {
+  verifyInstallation()
   const [data] = trpc.rat.useSuspenseQuery()
 
   return (
-    <ThemedView className="flex-1 p-8 gap-4 overflow-hidden pt-20">
-      <Text>{data}</Text>
-      <Button onPress={() => openMap({lat: 42.89309036394007, lng: -71.39225539916762, label: "Londondairy"})} title="Test this" />
-    </ThemedView>
+    <SafeAreaView className="">
+      <View className="p-8">
+        <View className="w-full bg-neutral-50 p-4 rounded-md border-neutral-200 border-[0.0125rem] flex flex-col gap-2">
+          <Text className="text-2xl font-semibold">Good Morning</Text>
+          <Link href="/check-in" className="bg-[##5DA8EC] flex text-center items-center p-2 rounded-md border-[0.0125rem] ">
+              <Text className="font-bold">Check In</Text>
+          </Link>
+        </View>
+      </View>
+    </SafeAreaView>
   ); 
 }
 
