@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { trpc } from "../../lib/trpc";
 import { httpBatchLink } from "@trpc/client";
 import SuperJSON from "superjson";
+import { setStatusBarHidden } from "expo-status-bar";
 
 export default function TabLayout() {
   const [queryClient] = useState(() => new QueryClient());
@@ -22,9 +23,10 @@ export default function TabLayout() {
           transformer: SuperJSON,
         }),
       ],
-    }) 
+    })
   );
   const colorScheme = useColorScheme();
+  setStatusBarHidden(true);
 
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
@@ -44,7 +46,7 @@ export default function TabLayout() {
               },
               default: { borderTopWidth: 0 },
             }),
-          }}> 
+          }}>
           <Tabs.Screen
             name="index"
             options={{
