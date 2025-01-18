@@ -14,8 +14,8 @@ export default function App() {
       route: "M14",
       routeColor: "aqua",
       coords: {
-        latitude: 30,
-        longitude: -70,
+        latitude: 42.255,
+        longitude: -71.795,
       },
     },
   ];
@@ -36,10 +36,14 @@ export default function App() {
           }
         }>
         <Marker coordinate={location ?? { latitude: 0, longitude: 0 }} />
-
-        {/* {coordinates.map((coordinate, index) => (
-          <Marker key={`coordinate_${index}`} coordinate={coordinate} />
-        ))} 
+        {busStops.map((stop, index) => (
+          <Marker
+            key={`coordinate_${index}`}
+            coordinate={stop.coords}
+            pinColor={stop.routeColor}
+          />
+        ))}
+        {/*
         <MapViewDirections
           origin={coordinates[0]}
           destination={coordinates[1]}
