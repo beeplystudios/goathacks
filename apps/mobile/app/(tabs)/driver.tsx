@@ -1,49 +1,37 @@
-import { useState, useEffect } from "react";
-import { Platform, Text, View, StyleSheet } from "react-native";
+import ThemedView from "@/components/ThemedView";
+import { trpc } from "@/lib/trpc";
+import { StyleSheet, View, Text, Button } from "react-native";
 
-import * as Device from "expo-device";
+import {Linking, Platform} from 'react-native';
 
-import * as Location from "expo-location";
+export type OpenMapArgs = {
+  lat: string | number;
+  lng: string | number;
+  label: string;
+};
 
-export default function App() {
-  const [location, setLocation] = useState<Location.LocationObject | null>(
-    null
-  );
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+export const openMap = ({lat, lng, label}: OpenMapArgs) => {
+  const scheme = Platform.select({
+    ios: `maps://?q=${label}&ll=${lat},${lng}`,
+    android: `geo:${lat},${lng}?q=${lat},${lng}(${label})`,
+  });
 
-  useEffect(() => {
-    async function getCurrentLocation() {
-      if (Platform.OS === "android" && !Device.isDevice) {
-        setErrorMsg(
-          "Oops, this will not work on Snack in an Android Emulator. Try it on your device!"
-        );
-        return;
-      }
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    }
-
-    getCurrentLocation();
-  }, []);
-
-  let text = "Waiting...";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
+  if (scheme) {
+    Linking.openURL(scheme).catch(err =>
+      console.error('Error opening map: ', err),
+    );
   }
+};
+
+export default function TabTwoScreen() {
+  const [data] = trpc.rat.useSuspenseQuery()
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>{text}</Text>
-    </View>
-  );
+    <ThemedView className="flex-1 p-8 gap-4 overflow-hidden pt-20">
+      <Text>{data}</Text>
+      <Button onPress={() => openMap({lat: 42.89309036394007, lng: -71.39225539916762, label: "Londondairy"})} title="Test this" />
+    </ThemedView>
+  ); 
 }
 
 const styles = StyleSheet.create({

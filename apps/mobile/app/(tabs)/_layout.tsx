@@ -19,16 +19,10 @@ export default function TabLayout() {
       links: [
         httpBatchLink({
           url: `${process.env.EXPO_PUBLIC_API_URL}/trpc`,
-          // You can pass any HTTP headers you wish here
-          // async headers() {
-          //   return {
-          //     authorization: getAuthCookie(),
-          //   };
-          // },
           transformer: SuperJSON,
         }),
       ],
-    })
+    }) 
   );
   const colorScheme = useColorScheme();
 
