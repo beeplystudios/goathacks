@@ -1,4 +1,4 @@
-import ThemedView from "@/components/ThemedView";
+import ThemedView from "../../components/ThemedView";
 import { StyleSheet, View } from "react-native";
 
 export default function TabTwoScreen() {

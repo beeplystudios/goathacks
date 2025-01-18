@@ -1,5 +1,5 @@
 import { StyleSheet, View, Pressable, Text } from "react-native";
-import IconSymbol from "./ui/IconSymbol";
+import IconSymbol from "./ui/IconSymbol.android";
 
 const NewProjectButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
   return (

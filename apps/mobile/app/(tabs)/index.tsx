@@ -2,7 +2,7 @@ import React from "react";
 import MapView, { Marker } from "react-native-maps";
 import { Dimensions, StyleSheet, View } from "react-native";
 import MapViewDirections from "react-native-maps-directions";
-import useLocation from "@/hooks/useLocation";
+import useLocation from "../../hooks/useLocation";
 
 export default function App() {
   const origin = { latitude: 37.3318456, longitude: -122.0296002 };

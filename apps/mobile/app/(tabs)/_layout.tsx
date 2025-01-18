@@ -2,13 +2,13 @@ import { Tabs } from "expo-router";
 import React, { useState } from "react";
 import { Platform } from "react-native";
 
-import HapticTab from "@/components/HapticTab";
-import TabBarBackground from "@/components/ui/TabBarBackground";
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import HapticTab from "../../components/HapticTab";
+import TabBarBackground from "../../components/ui/TabBarBackground";
+import { Colors } from "../../constants/Colors";
+import { useColorScheme } from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { trpc } from "@/lib/trpc";
+import { trpc } from "../../lib/trpc";
 import { httpBatchLink } from "@trpc/client";
 import SuperJSON from "superjson";
 
@@ -33,7 +33,7 @@ export default function TabLayout() {
           screenOptions={{
             tabBarActiveTintColor: Colors[colorScheme ?? "dark"].tint,
             headerShown: false,
-            tabBarButton: HapticTab,
+            // tabBarButton: HapticTab,
             tabBarBackground: TabBarBackground,
             headerStatusBarHeight: 0,
             tabBarStyle: Platform.select({
@@ -44,7 +44,7 @@ export default function TabLayout() {
               },
               default: { borderTopWidth: 0 },
             }),
-          }}>
+          }}> 
           <Tabs.Screen
             name="index"
             options={{

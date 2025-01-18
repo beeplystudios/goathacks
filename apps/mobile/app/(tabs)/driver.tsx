@@ -1,5 +1,5 @@
-import ThemedView from "@/components/ThemedView";
-import { trpc } from "@/lib/trpc";
+import ThemedView from "../../components/ThemedView";
+import { trpc } from "../../lib/trpc";
 import { StyleSheet, View, Text, Button } from "react-native";
 
 import {Linking, Platform} from 'react-native';
