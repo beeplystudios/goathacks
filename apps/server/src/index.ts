@@ -9,11 +9,11 @@ app.get('/', (c) => c.text('Hono!'))
 
 app.use("/trpc/*", (ctx) =>
   fetchRequestHandler({
-    endpoint: "/api/trpc",
+    endpoint: "/trpc",
     router: appRouter,
     createContext: () => createTRPCContext(ctx),
     req: ctx.req.raw,
   })
 );
-
+ 
 serve(app)

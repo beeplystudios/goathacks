@@ -2,17 +2,40 @@ import { Tabs, useFocusEffect } from "expo-router";
 import React, { useState } from "react";
 import { Platform } from "react-native";
 
-import { HapticTab } from "@/components/HapticTab";
-import { IconSymbol } from "@/components/ui/IconSymbol";
+import HapticTab from "@/components/HapticTab";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { trpc } from "@/lib/trpc";
+import { httpBatchLink } from "@trpc/client";
+import SuperJSON from "superjson";
 
 export default function TabLayout() {
+  const [queryClient] = useState(() => new QueryClient());
+  const [trpcClient] = useState(() =>
+    trpc.createClient({
+      links: [
+        httpBatchLink({
+          url: 'https://88fb-68-116-196-69.ngrok-free.app/trpc',
+          // You can pass any HTTP headers you wish here
+          // async headers() {
+          //   return {
+          //     authorization: getAuthCookie(),
+          //   };
+          // },
+          transformer: SuperJSON
+        }),
+      ],
+    }),
+  );
   const colorScheme = useColorScheme();
-
+ 
   return (
+        <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+ 
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "dark"].tint,
@@ -46,5 +69,8 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+          </QueryClientProvider>
+    </trpc.Provider>
+
   );
 }
