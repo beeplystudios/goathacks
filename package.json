@@ -4,10 +4,11 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dev": "yarn workspace @goathacks/mobile start"
+    "mobile:dev": "yarn workspace @goathacks/mobile start",
+    "server:dev": "yarn workspace @goathacks/server start"
   },
   "keywords": [],
-  "workspaces": ["apps/*"],
+  "workspaces": ["apps/*", "packages/*"],
   "author": "",
   "license": "ISC"
 }
