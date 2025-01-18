@@ -30,9 +30,11 @@ export default function TabTwoScreen() {
             AsyncStorage.removeItem("driver-certificate");
             setDriverCertificate(null);
           }}
-          className="text-white text-lg bg-red-600 rounded-md p-3 text-center"
+          className="bg-red-700 rounded-md p-3"
         >
-          <Text>Unregister as driver</Text>
+          <Text className="text-white text-lg text-center">
+            Unregister as driver
+          </Text>
         </Pressable>
       )}
     </ThemedView>

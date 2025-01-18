@@ -74,7 +74,7 @@ export default function TabLayout() {
                 <Ionicons name="bus" size={24} color={color} />
               ),
               title: "Drive",
-              href: driverCertificate !== null ? "/driver" : null,
+              href: driverCertificate !== null ? "/(tabs)/driver" : null,
             }}
           />
           <Tabs.Screen
