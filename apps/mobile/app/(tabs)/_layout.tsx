@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Platform } from "react-native";
 
 import HapticTab from "@/components/HapticTab";
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -23,8 +22,9 @@ export default function TabLayout() {
           ios: {
             // Use a transparent background on iOS to show the blur effect
             position: "absolute",
+            borderTopWidth: 0,
           },
-          default: {},
+          default: { borderTopWidth: 0 },
         }),
       }}>
       <Tabs.Screen
