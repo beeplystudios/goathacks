@@ -1,0 +1,13 @@
+{
+  "name": "goathacks",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "dev": "yarn workspace @goathacks/mobile start"
+  },
+  "keywords": [],
+  "workspaces": ["apps/*"],
+  "author": "",
+  "license": "ISC"
+}
