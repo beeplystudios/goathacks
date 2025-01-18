@@ -1,8 +1,7 @@
 import { Tabs } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Platform } from "react-native";
 
-import HapticTab from "../../components/HapticTab";
 import TabBarBackground from "../../components/ui/TabBarBackground";
 import { Colors } from "../../constants/Colors";
 import { useColorScheme } from "../../hooks/useColorScheme";
@@ -12,6 +11,7 @@ import { trpc } from "../../lib/trpc";
 import { httpBatchLink } from "@trpc/client";
 import SuperJSON from "superjson";
 import { setStatusBarHidden } from "expo-status-bar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function TabLayout() {
   const [queryClient] = useState(() => new QueryClient());
@@ -27,6 +27,16 @@ export default function TabLayout() {
   );
   const colorScheme = useColorScheme();
   setStatusBarHidden(true);
+
+  const [driverCertificate, setDriverCertificate] = useState<string | null>(
+    null
+  );
+
+  useEffect(() => {
+    AsyncStorage.getItem("driver-certificate").then((val) => {
+      if (val) setDriverCertificate(val);
+    });
+  }, [setDriverCertificate, AsyncStorage]);
 
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
@@ -46,7 +56,8 @@ export default function TabLayout() {
               },
               default: { borderTopWidth: 0 },
             }),
-          }}>
+          }}
+        >
           <Tabs.Screen
             name="index"
             options={{
@@ -63,6 +74,7 @@ export default function TabLayout() {
                 <Ionicons name="bus" size={24} color={color} />
               ),
               title: "Drive",
+              href: driverCertificate !== null ? "/driver" : null,
             }}
           />
           <Tabs.Screen

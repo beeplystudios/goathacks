@@ -33,6 +33,14 @@ const RootLayout = () => {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="register-driver"
+            options={{
+              presentation: "modal",
+              statusBarHidden: true,
+              headerShown: false,
+            }}
+          />
           <StatusBar hidden />
         </Stack>
       </ClerkLoaded>

@@ -5,7 +5,6 @@ import {
   CameraView,
   useCameraPermissions,
 } from "expo-camera";
-import { Href, RelativePathString, useRouter } from "expo-router";
 
 export function BarcodeScanner(props: {
   onScan: (evt: BarcodeScanningResult) => void;
@@ -38,6 +37,6 @@ export function BarcodeScanner(props: {
         style={{ height: "100%" }}
         onBarcodeScanned={props.onScan}
       />
-     </View>
+    </View>
   );
 }
