@@ -3,10 +3,9 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
+      "@/*": ["./app/*"]
+    },
+    "moduleSuffixes": [".ios", ".android", ".native", ""]
   },
   "include": [
     "**/*.ts",
