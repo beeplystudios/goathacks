@@ -1,61 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import MapViewDirections from "react-native-maps-directions";
 import useLocation from "../../hooks/useLocation";
+import { LocationObjectCoords } from "expo-location";
 
 export default function App() {
-  const origin = { latitude: 37.3318456, longitude: -122.0296002 };
   const { coords } = useLocation();
   const { width, height } = Dimensions.get("window");
   const ASPECT_RATIO = width / height;
-  const destination = { latitude: 37.771707, longitude: -122.4053769 };
   const LATITUDE = 37.771707;
   const LONGITUDE = -122.4053769;
   const LATITUDE_DELTA = 0.0922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-  const coordinates = [
-    {
-      latitude: 37.3317876,
-      longitude: -122.0054812,
-    },
-    coords ?? {
-      latitude: 37.771707,
-      longitude: -122.4053769,
-    },
-  ];
+  const [location, setLocation] = useState<LocationObjectCoords | undefined>();
+  // const coordinates = [
+  //   {
+  //     latitude: 37.3317876,
+  //     longitude: -122.0054812,
+  //   },
+  //   coords ?? {
+  //     latitude: 37.771707,
+  //     longitude: -122.4053769,
+  //   },
+  // ];
+
+  useEffect(() => {
+    setLocation(coords);
+  }, [coords]);
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 gap-4 overflow-hidden pt-20 items-center justify-center bg-gray-800">
       <MapView
         style={styles.map}
-        initialRegion={{
-          latitude: LATITUDE,
-          longitude: LONGITUDE,
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: LONGITUDE_DELTA,
-        }}>
-        {coordinates.map((coordinate, index) => (
+        initialRegion={
+          location && {
+            ...location,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          }
+        }>
+        <Marker coordinate={location ?? { latitude: 0, longitude: 0 }} />
+
+        {/* {coordinates.map((coordinate, index) => (
           <Marker key={`coordinate_${index}`} coordinate={coordinate} />
-        ))}
+        ))} 
         <MapViewDirections
           origin={coordinates[0]}
           destination={coordinates[1]}
           strokeWidth={3}
           strokeColor="hotpink"
           apikey={process.env.EXPO_PUBLIC_MAPS_API_KEY ?? ""}
-        />
+        /> */}
       </MapView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   map: {
-    width: "100%",
-    height: "100%",
+    width: "90%",
+    aspectRatio: 1,
+    borderRadius: 12,
   },
 });

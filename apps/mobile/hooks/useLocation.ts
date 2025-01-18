@@ -6,15 +6,15 @@ import * as Device from "expo-device";
 import * as Location from "expo-location";
 
 export interface LocationType {
-  coords?: Location.LocationObjectCoords;
-  error?: string | null;
+  location: Location.LocationObjectCoords | null;
+  error: string;
 }
 
 export default function useLocation() {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
   );
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   useEffect(() => {
     async function getCurrentLocation() {
@@ -37,6 +37,5 @@ export default function useLocation() {
     getCurrentLocation();
   }, []);
 
-  const res: LocationType = { ...location, error: errorMsg };
-  return res;
+  return { coords: location?.coords, error: errorMsg };
 }
