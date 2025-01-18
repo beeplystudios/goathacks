@@ -1,17 +1,9 @@
-import { Stack, useNavigation } from 'expo-router';
-import { Text, View } from 'react-native';
-import { useEffect } from 'react';
+import { Text, View } from "react-native";
 
-export default function Home() {
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    navigation.setOptions({ headerShown: false });
-  }, [navigation]);
-
+export default function Index() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Scrasdwaeen</Text>
+    <View>
+      <Text className="font-bold text-red-700">Edit app/index.tsx to edit this screen.</Text>
     </View>
   );
 }
