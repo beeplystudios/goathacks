@@ -52,3 +52,21 @@ export const busSessionRelations = relations(busSession, ({ one }) => ({
     references: [route.id],
   }),
 }));
+
+export const registeredDrivers = sqliteTable("registeredDrivers", {
+  id: text("id")
+    .primaryKey()
+    .unique()
+    .$defaultFn(() => createId()),
+  driverId: text("driverId").unique(),
+});
+
+export const qrKeys = sqliteTable("qrKeys", {
+  id: text("id")
+    .primaryKey()
+    .unique()
+    .$defaultFn(() => createId()),
+  // 0 -> Bus, 1 -> Driver
+  type: integer("type"),
+  key: text("key").notNull(),
+});

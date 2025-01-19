@@ -17,15 +17,17 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   setStatusBarHidden(true);
 
-  const [driverCertificate, setDriverCertificate] = useState<string | null>(
-    null
-  );
+  // const [driverCertificate, setDriverCertificate] = useState<string | null>(
+  //   null
+  // );
 
-  useEffect(() => {
-    AsyncStorage.getItem("driver-certificate").then((val) => {
-      if (val) setDriverCertificate(val);
-    });
-  }, [setDriverCertificate, AsyncStorage]);
+  // useEffect(() => {
+  //   AsyncStorage.getItem("driver-certificate").then((val) => {
+  //     if (val) setDriverCertificate(val);
+  //   });
+  // }, [setDriverCertificate, AsyncStorage]);
+
+  const [isRegistered] = trpc.driver.isRegistered.useSuspenseQuery();
 
   return (
     <Tabs
@@ -60,7 +62,7 @@ export default function TabLayout() {
             <Ionicons name="bus" size={24} color={color} />
           ),
           title: "Drive",
-          href: driverCertificate !== null ? "/(tabs)/driver" : null,
+          href: isRegistered ? "/(tabs)/driver" : null,
         }}
       />
       <Tabs.Screen

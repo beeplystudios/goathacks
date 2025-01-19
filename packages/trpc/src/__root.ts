@@ -1,7 +1,12 @@
 import { publicProcedure, router } from "./trpc";
 import { z } from "zod";
-import { eq } from "drizzle-orm";
-import { busSession, route } from "@goathacks/db/schema";
+import { and, eq } from "drizzle-orm";
+import {
+  busSession,
+  qrKeys,
+  registeredDrivers,
+  route,
+} from "@goathacks/db/schema";
 import { TRPCError } from "@trpc/server";
 import { getDirections } from "./get-directions";
 import { authedProcedure } from "./authed-procedure";
@@ -130,5 +135,38 @@ export const appRouter = router({
 
         return result;
       }),
+  },
+  driver: {
+    register: authedProcedure
+      .input(z.object({ key: z.string() }))
+      .mutation(async ({ ctx, input }) => {
+        const keyValid = await ctx.db.query.qrKeys.findFirst({
+          where: and(eq(qrKeys.key, input.key), eq(qrKeys.type, 1)),
+        });
+
+        if (!keyValid) throw new TRPCError({ code: "FORBIDDEN" });
+
+        await ctx.db.delete(qrKeys).where(eq(qrKeys.id, keyValid.id));
+
+        const result = await ctx.db.insert(registeredDrivers).values({
+          driverId: ctx.user.id,
+        });
+
+        return result;
+      }),
+    unregister: authedProcedure.mutation(async ({ ctx }) => {
+      const result = await ctx.db
+        .delete(registeredDrivers)
+        .where(eq(registeredDrivers.driverId, ctx.user.id));
+
+      return result;
+    }),
+    isRegistered: authedProcedure.query(async ({ ctx }) => {
+      const result = await ctx.db.query.registeredDrivers.findFirst({
+        where: eq(registeredDrivers.driverId, ctx.user.id),
+      });
+
+      return result !== undefined;
+    }),
   },
 });
