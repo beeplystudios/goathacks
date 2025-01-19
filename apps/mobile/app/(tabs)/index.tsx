@@ -3,7 +3,12 @@ import MapView, { Marker } from "react-native-maps";
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import useLocation from "../../hooks/useLocation";
 import { LocationObjectCoords } from "expo-location";
-import { BusRouteType, BusStopType, RouteColor } from "../../constants/BusData";
+import {
+  BusRouteType,
+  BusStopType,
+  getIthRouteColor,
+  RouteColor,
+} from "../../constants/BusData";
 import MapViewDirections from "react-native-maps-directions";
 import BusRoute from "../../components/BusRoute";
 import { useAuth } from "@clerk/clerk-expo";
@@ -12,11 +17,7 @@ import { trpc } from "../../lib/trpc";
 
 export default function App() {
   const { coords } = useLocation();
-  const [selectedRoute, setSelectedRoute] = useState();
-  const [selectedColor, setSelectedColor] = useState<string | undefined>();
   const [activeStops, setActiveStops] = useState<BusStopType[]>([]);
-  // const [busStops, setBusStops] = useState<BusStopType[]>([]);
-  // const [busRoutes, setBusRoutes] = useState<BusRouteType[]>([]);
 
   const [{ stops: busStops, routes: busRoutes }] =
     trpc.busSession.getAllRoutes.useSuspenseQuery(undefined, {
@@ -42,17 +43,7 @@ export default function App() {
         ),
       250
     );
-    // setBusRoutes([
-    //   { route: "M14", routeColor: "aqua" },
-    //   { route: "Santiago", routeColor: "gold" },
-    // ]);
   }, [busStops]);
-
-  useEffect(() => {
-    setSelectedColor(
-      busRoutes.find((r) => r.route === selectedRoute)?.routeColor
-    );
-  }, [selectedRoute]);
 
   return (
     <>
@@ -70,12 +61,14 @@ export default function App() {
           <Marker
             key={`coordinate_${index}`}
             coordinate={stop.coords}
-            pinColor={busRoutes.find((r) => r.route === stop.route)?.routeColor}
+            pinColor={getIthRouteColor(
+              busRoutes.findIndex((r) => r.route === stop.route)
+            )}
           />
         ))}
         {process.env.EXPO_PUBLIC_MAPS_API_KEY &&
           activeStops.length > 0 &&
-          busRoutes.map((route) => {
+          busRoutes.map((route, i) => {
             const theseStops = activeStops.filter(
               (s) => s.route === route.route
             );
@@ -87,15 +80,20 @@ export default function App() {
                 waypoints={theseStops.slice(1, -1).map((b) => b.coords)}
                 apikey={process.env.EXPO_PUBLIC_MAPS_API_KEY ?? ""}
                 strokeWidth={3}
-                strokeColor={route.routeColor}
+                key={`route-${route.route}`}
+                strokeColor={getIthRouteColor(i)}
               />
             );
           })}
       </MapView>
       {busRoutes.length > 0 && (
-        <ScrollView className="absolute bg-neutral-700 w-full bottom-0 h-[20%] rounded-t-lg">
+        <ScrollView className="absolute bg-neutral-700 w-full bottom-0 h-[35%] rounded-t-lg">
           {busRoutes.map((r, i) => (
-            <BusRoute {...r} key={i} />
+            <BusRoute
+              route={r.route}
+              routeColor={getIthRouteColor(i)}
+              key={i}
+            />
           ))}
         </ScrollView>
       )}
