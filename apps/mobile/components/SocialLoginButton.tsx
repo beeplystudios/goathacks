@@ -85,7 +85,8 @@ const SocialLoginButton = ({
     <TouchableOpacity
       style={[styles.container]}
       onPress={onSocialLoginPress}
-      disabled={isLoading}>
+      disabled={isLoading}
+    >
       {isLoading ? (
         <ActivityIndicator size="small" color="black" />
       ) : (
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     borderColor: "gray",
+    backgroundColor: "white",
     borderWidth: StyleSheet.hairlineWidth,
     padding: 10,
     borderRadius: 10,

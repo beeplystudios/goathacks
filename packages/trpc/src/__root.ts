@@ -12,7 +12,6 @@ import { getDirections } from "./get-directions";
 import { authedProcedure } from "./authed-procedure";
 
 export const appRouter = router({
-  test: authedProcedure.query(({ ctx }) => ctx.user.fullName),
   route: {
     get: authedProcedure
       .input(z.object({ routeId: z.string() }))
@@ -135,6 +134,14 @@ export const appRouter = router({
 
         return result;
       }),
+    getLocations: publicProcedure.query(async ({ ctx }) => {
+      const result = await ctx.db.query.busSession.findMany();
+
+      return result.map((item) => ({
+        latitude: item.lat,
+        longitude: item.lon,
+      }));
+    }),
   },
   driver: {
     register: authedProcedure

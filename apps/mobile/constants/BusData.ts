@@ -15,6 +15,21 @@ export type RouteColor =
   | "violet"
   | "indigo";
 
+const AllRouteColors = [
+  "red",
+  "orange",
+  "yellow",
+  "tan",
+  "linen",
+  "green",
+  "aqua",
+  "violet",
+];
+
+export const getIthRouteColor = (i: number) => {
+  return AllRouteColors[i % AllRouteColors.length];
+};
+
 export interface BusStopType {
   route: string;
   coords: {

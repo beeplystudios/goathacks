@@ -32,6 +32,8 @@ export default function TabTwoScreen() {
 
   return (
     <SafeAreaView className="flex-1 p-8 gap-4 overflow-hidden bg-neutral-500">
+      <Text className="text-white font-semibold text-xl">Drive</Text>
+
       {!data ? (
         <Link
           href={"/check-in"}
