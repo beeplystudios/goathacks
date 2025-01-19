@@ -1,4 +1,4 @@
-import { sqliteTable, text, real } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, real, integer } from "drizzle-orm/sqlite-core";
 import { createId } from "@paralleldrive/cuid2"
 import { relations } from "drizzle-orm";
  
@@ -21,8 +21,9 @@ export const stop = sqliteTable("stop", {
     .unique() 
     .$defaultFn(() => createId()),
   name: text("name"),
+  index: integer("index"),
   lat: real("lat"),
-  lon: real("lon"),
+  lng: real("lng"),
   routeId: text("routeId").notNull().references(() => route.id)
 })
 
