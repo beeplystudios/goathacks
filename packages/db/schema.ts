@@ -45,3 +45,10 @@ export const busSession = sqliteTable("busSession", {
   lat: real("lat"),
   lon: real("lon"),
 });
+
+export const busSessionRelations = relations(busSession, ({ one }) => ({
+  route: one(route, {
+    fields: [busSession.routeId],
+    references: [route.id],
+  }),
+}));

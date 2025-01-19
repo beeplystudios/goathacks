@@ -12,7 +12,8 @@ const CustomModal: React.FC<
       avoidKeyboard
       hideModalContentWhileAnimating
       swipeDirection="down"
-      onBackdropPress={onClose}>
+      onBackdropPress={onClose}
+    >
       <View style={styles.modalContent}>
         <View style={styles.xbar}>
           <Pressable onPress={onClose}>

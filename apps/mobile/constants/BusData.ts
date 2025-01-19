@@ -25,5 +25,5 @@ export interface BusStopType {
 
 export interface BusRouteType {
   route: string;
-  routeColor: RouteColor;
+  routeColor: string;
 }

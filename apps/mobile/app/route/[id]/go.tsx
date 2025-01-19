@@ -67,6 +67,8 @@ const StopView = (props: {
   const [reachedDest, setReachedDest] = useState(false);
   const router = useRouter();
 
+  const updateLocation = trpc.busSession.updateLocation.useMutation();
+
   useEffect(() => {
     if (timeLeft <= 0) {
       props.setActiveStopIdx((stop) => stop + 1);
@@ -97,6 +99,11 @@ const StopView = (props: {
         accuracy: Location.LocationAccuracy.BestForNavigation,
       });
 
+      updateLocation.mutate({
+        lat: location.coords.latitude,
+        lon: location.coords.longitude,
+      });
+
       const distance = getDistance(
         { lat: location.coords.latitude, lon: location.coords.longitude },
         {
@@ -104,8 +111,6 @@ const StopView = (props: {
           lon: data.steps[activeStepIndex]!.end_location.lon,
         }
       );
-
-      console.log("Distance: ", Date.now(), distance);
 
       if (distance < 20) {
         setActiveStep((step) => step + 1);

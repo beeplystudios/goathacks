@@ -26,22 +26,43 @@ export const openMap = ({ lat, lng, label }: OpenMapArgs) => {
 };
 
 export default function TabTwoScreen() {
-  verifyInstallation();
+  const [data] = trpc.busSession.get.useSuspenseQuery();
+  const mutation = trpc.busSession.delete.useMutation();
+  const utils = trpc.useUtils();
 
   return (
     <SafeAreaView className="flex-1 p-8 gap-4 overflow-hidden bg-neutral-500">
-      <Link
-        href={"/check-in"}
-        className="text-lg bg-[#5DA8EC] rounded-md p-3 text-center">
-        Clock in
-      </Link>
-      <Link
-        href={{
-          pathname: "/route/[id]/go",
-          params: {
-            id: "cm62ksg1g00000cjl2k9cd0z",
-          },
-        }}></Link>
+      {!data ? (
+        <Link
+          href={"/check-in"}
+          className="text-lg bg-pastel-teal-primary rounded-md p-3 text-center"
+        >
+          Clock in
+        </Link>
+      ) : (
+        <View className="flex flex-col gap-4">
+          <Link
+            href={{
+              pathname: "/route/[id]/go",
+              params: { id: data.routeId as string },
+            }}
+            className="text-lg bg-pastel-teal-primary rounded-md p-3 text-center"
+          >
+            Return to Navigation
+          </Link>
+          <Pressable
+            onPress={async () => {
+              await mutation.mutateAsync();
+
+              await utils.busSession.invalidate();
+            }}
+          >
+            <Text className="text-lg bg-feedback-error-primary rounded-md p-3 text-center">
+              Clock Out
+            </Text>
+          </Pressable>
+        </View>
+      )}
     </SafeAreaView>
   );
 }
