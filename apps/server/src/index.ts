@@ -8,9 +8,14 @@ import { db } from "@goathacks/db";
 import { qrKeys, route, stop } from "@goathacks/db/schema";
 import { randomBytes } from "crypto";
 
-interface Stop {
+interface Location {
   lat: number;
   lng: number;
+}
+
+interface Stop {
+  loc: Location;
+  name: string;
 }
 
 config();
@@ -53,17 +58,18 @@ app.get("/routes", async (c) => {
 app.post("/routes", async (c) => {
   const args = (await c.req.json()) as Stop[][];
   await db.delete(route);
-  await db.delete(stop);
+  // await db.delete(stop);
   const routes = await db
     .insert(route)
-    .values(args.map((_) => ({})))
+    .values(args.map((_, i) => ({ name: `Route ${i + 1}`})))
     .returning();
   await db.insert(stop).values(
     routes.flatMap((route, i) =>
       args[i].map((stop, j) => ({
         routeId: route.id,
-        lat: stop.lat,
-        lon: stop.lng,
+        lat: stop.loc.lat,
+        lon: stop.loc.lng,
+        name: stop.name,
         index: j,
       }))
     )
