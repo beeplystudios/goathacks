@@ -6,6 +6,9 @@ import { LocationObjectCoords } from "expo-location";
 import { BusRouteType, BusStopType, RouteColor } from "../../constants/BusData";
 import MapViewDirections from "react-native-maps-directions";
 import BusRoute from "../../components/BusRoute";
+import { useAuth } from "@clerk/clerk-expo";
+import { Redirect } from "expo-router";
+import { trpc } from "../../lib/trpc";
 
 export default function App() {
   const { coords } = useLocation();
@@ -13,6 +16,9 @@ export default function App() {
   const [selectedColor, setSelectedColor] = useState<RouteColor | undefined>();
   const [busStops, setBusStops] = useState<BusStopType[]>([]);
   const [busRoutes, setBusRoutes] = useState<BusRouteType[]>([]);
+  const auth = useAuth();
+
+  if (!auth.isSignedIn) return <Redirect href={"/(auth)"} />;
 
   // FUCKING HORROR SHOW
   useEffect(() => {
@@ -64,7 +70,8 @@ export default function App() {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }
-        }>
+        }
+      >
         {busStops.map(
           (stop, index) =>
             stop.route === selectedRoute && (

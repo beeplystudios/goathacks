@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as WebBrowser from "expo-web-browser";
 import { useEffect } from "react";
+import { setStatusBarHidden } from "expo-status-bar";
 
 export const useWarmUpBrowser = () => {
   useEffect(() => {
@@ -20,14 +21,17 @@ WebBrowser.maybeCompleteAuthSession();
 const AuthScreen = () => {
   useWarmUpBrowser();
   const insets = useSafeAreaInsets();
+
   return (
     <View
+      className="bg-neutral-700"
       style={[
         styles.container,
         { paddingTop: insets.top + 40, paddingBottom: insets.bottom },
-      ]}>
+      ]}
+    >
       <View style={styles.headingContainer}>
-        <Text style={styles.label}>Login to Hustle!</Text>
+        <Text style={styles.label}>Login to hustleandbustle!</Text>
         <Text style={styles.description}>
           Start your journey with thousands of developers around the world.
         </Text>
