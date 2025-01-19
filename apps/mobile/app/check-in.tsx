@@ -1,5 +1,19 @@
+import { useRouter } from "expo-router";
 import { BarcodeScanner } from "../components/BarcodeScanner";
 
 export default function CheckIn() {
-  return <BarcodeScanner redirect={"/driver/route/[id]"} />;
+  const router = useRouter();
+
+  return (
+    <BarcodeScanner
+      onScan={(evt) => {
+        router.replace({
+          pathname: "/route/[id]",
+          params: {
+            id: evt.data,
+          },
+        });
+      }}
+    />
+  );
 }

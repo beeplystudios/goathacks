@@ -1,12 +1,14 @@
 import { View, Text, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CameraView, useCameraPermissions } from "expo-camera";
-import { Href, RelativePathString, useRouter } from "expo-router";
+import {
+  BarcodeScanningResult,
+  CameraView,
+  useCameraPermissions,
+} from "expo-camera";
 
-type HrefType = Parameters<ReturnType<typeof useRouter>["replace"]>[0][];
-
-export function BarcodeScanner(props: { redirect: string }) {
-  const router = useRouter();
+export function BarcodeScanner(props: {
+  onScan: (evt: BarcodeScanningResult) => void;
+}) {
   const [permission, requestPermission] = useCameraPermissions();
 
   if (!permission) {
@@ -29,22 +31,12 @@ export function BarcodeScanner(props: { redirect: string }) {
   }
 
   return (
-    <SafeAreaView className="h-screen w-screen">
-      <View className="h-screen w-screen">
-        <CameraView
-          facing="back"
-          style={{ height: "100%" }}
-          onBarcodeScanned={(evt) => {
-            // console.log(evt.data);
-            router.replace({
-              pathname: props.redirect,
-              params: {
-                id: evt.data,
-              },
-            });
-          }}
-        ></CameraView>
-      </View>
-    </SafeAreaView>
+    <View className="h-screen w-screen">
+      <CameraView
+        facing="back"
+        style={{ height: "100%" }}
+        onBarcodeScanned={props.onScan}
+      />
+    </View>
   );
 }

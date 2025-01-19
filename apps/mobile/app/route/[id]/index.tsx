@@ -1,7 +1,8 @@
 import { Link, Tabs, useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Pressable, Text } from "react-native";
-import { trpc } from "../../../../lib/trpc";
+import { trpc } from "../../../lib/trpc";
+import { setStatusBarHidden } from "expo-status-bar";
 
 export default function Screen() {
   const { id } = useLocalSearchParams();
@@ -17,9 +18,10 @@ export default function Screen() {
       ))}
       <Link
         href={{
-          pathname: "/driver/route/[id]/go",
+          pathname: "/route/[id]/go",
           params: { id: id as string },
-        }}>
+        }}
+      >
         Go
       </Link>
     </SafeAreaView>
