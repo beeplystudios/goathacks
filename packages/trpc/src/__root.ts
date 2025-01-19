@@ -9,7 +9,7 @@ import { authedProcedure } from "./authed-procedure";
 export const appRouter = router({
   test: authedProcedure.query(({ ctx }) => ctx.user.fullName),
   route: {
-    get: publicProcedure
+    get: authedProcedure
       .input(z.object({ routeId: z.string() }))
       .query(async ({ ctx, input }) => {
         const query = await ctx.db.query.route.findFirst({
@@ -31,7 +31,7 @@ export const appRouter = router({
         return query;
       }),
 
-    getRouteInstructions: publicProcedure
+    getRouteInstructions: authedProcedure
       .input(
         z.object({
           origin: z.object({ lat: z.number(), lon: z.number() }),
