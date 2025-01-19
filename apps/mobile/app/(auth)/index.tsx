@@ -1,6 +1,9 @@
 import SocialLoginButton from "@/../components/SocialLoginButton";
 import { StyleSheet, Text, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import * as WebBrowser from "expo-web-browser";
 import { useEffect } from "react";
 import { setStatusBarHidden } from "expo-status-bar";
@@ -23,24 +26,27 @@ const AuthScreen = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View
-      className="bg-neutral-700"
-      style={[
-        styles.container,
-        { paddingTop: insets.top + 40, paddingBottom: insets.bottom },
-      ]}
+    <SafeAreaView
+      className="bg-neutral-700 h-screen p-8"
+      // style={[
+      //   styles.container,
+      //   { paddingTop: insets.top + 40, paddingBottom: insets.bottom },
+      // ]}
     >
-      <View style={styles.headingContainer}>
-        <Text style={styles.label}>Login to hustleandbustle!</Text>
-        <Text style={styles.description}>
-          Start your journey with thousands of developers around the world.
+      <View className="flex flex-col gap-2 mt-[50%]">
+        <Text className="text-white text-2xl font-semibold">
+          Welcome to{" "}
+          <Text className="text-pastel-purple-primary">hustleandbustle</Text>!
+        </Text>
+        <Text className="text-neutral-50 text-lg font-medium">
+          Let our buses take you places!
         </Text>
       </View>
 
       <View style={styles.socialButtonsContainer}>
         <SocialLoginButton strategy="google" />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
