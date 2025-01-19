@@ -17,9 +17,13 @@ export type RouteColor =
 
 export interface BusStopType {
   route: string;
-  routeColor: RouteColor;
   coords: {
     latitude: number;
     longitude: number;
   };
+}
+
+export interface BusRouteType {
+  route: string;
+  routeColor: RouteColor;
 }
