@@ -77,11 +77,6 @@ export default function App() {
           }
         }
       >
-        <Marker
-          // key={`coordinate_${1}`}
-          coordinate={{ latitude: 42.2554974, longitude: -71.794403 }}
-          pinColor={selectedColor}
-        />
         {busStops.map(
           (stop, index) =>
             stop.route === selectedRoute && (

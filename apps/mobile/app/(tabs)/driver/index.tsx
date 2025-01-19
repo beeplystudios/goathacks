@@ -35,7 +35,7 @@ export default function TabTwoScreen() {
       {!data ? (
         <Link
           href={"/check-in"}
-          className="text-lg bg-pastel-teal-primary rounded-md p-3 text-center"
+          className="text-lg bg-primary-500 text-white font-medium rounded-md p-3 text-center"
         >
           Clock in
         </Link>
@@ -46,7 +46,7 @@ export default function TabTwoScreen() {
               pathname: "/route/[id]/go",
               params: { id: data.routeId as string },
             }}
-            className="text-lg bg-pastel-teal-primary rounded-md p-3 text-center"
+            className="text-lg bg-primary-500 text-white font-medium rounded-md p-3 text-center"
           >
             Return to Navigation
           </Link>
@@ -57,7 +57,7 @@ export default function TabTwoScreen() {
               await utils.busSession.invalidate();
             }}
           >
-            <Text className="text-lg bg-feedback-error-primary rounded-md p-3 text-center">
+            <Text className="text-lg bg-feedback-error-primary text-white font-medium rounded-md p-3 text-center">
               Clock Out
             </Text>
           </Pressable>

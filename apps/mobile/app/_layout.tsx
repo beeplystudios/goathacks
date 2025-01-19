@@ -58,6 +58,13 @@ const InnerLayout = () => {
             }}
           />
           <Stack.Screen
+            name="route/[id]/index"
+            options={{
+              statusBarHidden: Platform.OS !== "ios",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
             name="route/[id]/go"
             options={{
               statusBarHidden: Platform.OS !== "ios",

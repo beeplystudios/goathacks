@@ -16,7 +16,7 @@ export default function TabTwoScreen() {
       {!isDriver ? (
         <Link
           href={"/register-driver"}
-          className="text-white text-lg bg-green-600 rounded-md p-3 text-center"
+          className="text-lg bg-primary-500 text-white font-medium rounded-md p-3 text-center"
         >
           Register as driver
         </Link>
@@ -26,9 +26,8 @@ export default function TabTwoScreen() {
             await unregister.mutateAsync();
             await utils.driver.invalidate();
           }}
-          className="bg-red-700 rounded-md p-3"
         >
-          <Text className="text-white text-lg text-center">
+          <Text className="text-lg bg-feedback-error-primary text-white font-medium rounded-md p-3 text-center">
             Unregister as driver
           </Text>
         </Pressable>
