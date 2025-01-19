@@ -54,7 +54,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="driver"
+        name="driver/index"
         options={{
           tabBarIcon: ({ color }) => (
             <Ionicons name="bus" size={24} color={color} />
