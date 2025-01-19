@@ -94,8 +94,8 @@ export default function App() {
         )}
       </MapView>
       <ScrollView className="max-h-72 w-[90%] rounded-lg bg-black/40">
-        {busRoutes.map((r) => (
-          <BusRoute {...r} />
+        {busRoutes.map((r, i) => (
+          <BusRoute {...r} key={i} />
         ))}
       </ScrollView>
     </View>

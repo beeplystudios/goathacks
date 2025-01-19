@@ -1,16 +1,5 @@
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  Animated,
-  useAnimatedValue,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { View, Pressable, StyleSheet } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { AnimatedView } from "react-native-reanimated/lib/typescript/component/View";
-import { useEffect } from "react";
 import Modal from "react-native-modal";
 
 const CustomModal: React.FC<
