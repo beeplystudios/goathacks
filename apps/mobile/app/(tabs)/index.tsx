@@ -23,6 +23,13 @@ export default function App() {
     trpc.busSession.getAllRoutes.useSuspenseQuery(undefined, {
       refetchInterval: 5_000,
     });
+
+  const [busLocations] = trpc.busSession.getLocations.useSuspenseQuery(
+    undefined,
+    {
+      refetchInterval: 5_000,
+    }
+  );
   const auth = useAuth();
 
   if (!auth.isSignedIn) return <Redirect href={"/(auth)"} />;
@@ -56,7 +63,8 @@ export default function App() {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }
-        }>
+        }
+      >
         {activeStops?.map((stop, index) => (
           <Marker
             key={`coordinate_${index}`}
