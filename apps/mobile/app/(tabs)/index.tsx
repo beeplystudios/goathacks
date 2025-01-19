@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import useLocation from "../../hooks/useLocation";
 import { LocationObjectCoords } from "expo-location";
-import { BusStopType } from "../../constants/BusData";
+import { BusRouteType, BusStopType, RouteColor } from "../../constants/BusData";
 import MapViewDirections from "react-native-maps-directions";
+import BusRoute from "../../components/BusRoute";
 
 export default function App() {
   const { coords } = useLocation();
   const [selectedRoute, setSelectedRoute] = useState();
+  const [selectedColor, setSelectedColor] = useState<RouteColor | undefined>();
   const [busStops, setBusStops] = useState<BusStopType[]>([]);
+  const [busRoutes, setBusRoutes] = useState<BusRouteType[]>([]);
 
   // FUCKING HORROR SHOW
   useEffect(() => {
     const data: BusStopType[] = [
       {
         route: "M14",
-        routeColor: "aqua",
         coords: {
           latitude: 42.255,
           longitude: -71.795,
@@ -24,7 +26,13 @@ export default function App() {
       },
       {
         route: "M14",
-        routeColor: "aqua",
+        coords: {
+          latitude: 42.257,
+          longitude: -71.79,
+        },
+      },
+      {
+        route: "Santiago",
         coords: {
           latitude: 42.257,
           longitude: -71.79,
@@ -33,10 +41,20 @@ export default function App() {
     ];
     setBusStops(data);
     setTimeout(() => setBusStops([...data]), 250);
+    setBusRoutes([
+      { route: "M14", routeColor: "aqua" },
+      { route: "Santiago", routeColor: "gold" },
+    ]);
   }, []);
 
+  useEffect(() => {
+    setSelectedColor(
+      busRoutes.find((r) => r.route === selectedRoute)?.routeColor
+    );
+  }, [selectedRoute]);
+
   return (
-    <View className="flex-1 gap-4 overflow-hidden pt-20 items-center justify-center bg-gray-800">
+    <View className="flex-1 gap-4 overflow-hidden items-center justify-center bg-gray-800">
       <MapView
         style={styles.map}
         showsUserLocation
@@ -53,7 +71,7 @@ export default function App() {
               <Marker
                 key={`coordinate_${index}`}
                 coordinate={stop.coords}
-                pinColor={stop.routeColor}
+                pinColor={selectedColor}
               />
             )
         )}
@@ -64,10 +82,15 @@ export default function App() {
             waypoints={busStops.slice(1, -1).map((b) => b.coords)}
             apikey={process.env.EXPO_PUBLIC_MAPS_API_KEY}
             strokeWidth={3}
-            strokeColor={busStops[0].routeColor}
+            strokeColor={selectedColor}
           />
         )}
       </MapView>
+      <ScrollView className="max-h-72 w-[90%] rounded-lg bg-black/40">
+        {busRoutes.map((r) => (
+          <BusRoute {...r} />
+        ))}
+      </ScrollView>
     </View>
   );
 }
