@@ -42,7 +42,7 @@ export const busSession = sqliteTable("busSession", {
     .unique()
     .$defaultFn(() => createId()),
   driverId: text("driverId").unique(),
-  routeId: text("routeId"),
+  routeId: text("routeId").references(() => route.id, { onDelete: "cascade", onUpdate: "cascade" }),
   lat: real("lat"),
   lon: real("lon"),
 });
