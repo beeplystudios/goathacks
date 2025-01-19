@@ -35,3 +35,13 @@ export const stopRelations = relations(stop, ({ one }) => ({
   }),
 }));
 
+export const busSession = sqliteTable("busSession", {
+  id: text("id")
+    .primaryKey()
+    .unique()
+    .$defaultFn(() => createId()),
+  driverId: text("driverId").unique(),
+  routeId: text("routeId"),
+  lat: real("lat"),
+  lon: real("lon"),
+});
