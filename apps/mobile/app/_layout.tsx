@@ -53,14 +53,21 @@ const InnerLayout = () => {
             name="check-in"
             options={{
               presentation: "modal",
-              statusBarHidden: true,
+              statusBarHidden: Platform.OS !== "ios",
               headerShown: false,
             }}
           />
           <Stack.Screen
             name="route/[id]/go"
             options={{
-              statusBarHidden: true,
+              statusBarHidden: Platform.OS !== "ios",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="register-driver"
+            options={{
+              statusBarHidden: Platform.OS !== "ios",
               headerShown: false,
             }}
           />
