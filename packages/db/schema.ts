@@ -25,7 +25,7 @@ export const stop = sqliteTable("stop", {
   lon: real("lon"),
   routeId: text("routeId")
     .notNull()
-    .references(() => route.id),
+    .references(() => route.id, { onDelete: "cascade", onUpdate: "cascade" }),
 });
 
 export const stopRelations = relations(stop, ({ one }) => ({
