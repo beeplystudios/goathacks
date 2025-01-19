@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
 import MapView, { LatLng, Marker } from "react-native-maps";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import useLocation from "../../hooks/useLocation";
-import { LocationObjectCoords } from "expo-location";
-import {
-  BusRouteType,
-  BusStopType,
-  getIthRouteColor,
-  RouteColor,
-} from "../../constants/BusData";
+import { BusStopType, getIthRouteColor } from "../../constants/BusData";
 import MapViewDirections from "react-native-maps-directions";
 import BusRoute from "../../components/BusRoute";
 import { useAuth } from "@clerk/clerk-expo";
 import { Redirect } from "expo-router";
 import { trpc } from "../../lib/trpc";
-// import BusIcon from "../../assets/images/bus-icon.png";
+import BusIcon from "../../assets/images/bus-icon.png";
 
 export default function App() {
   const { coords } = useLocation();
@@ -79,8 +73,7 @@ export default function App() {
             <Marker
               key={`bus_${index}`}
               coordinate={bus as LatLng}
-
-              // image={BusIcon}
+              image={BusIcon}
             />
           ) : (
             <View />
