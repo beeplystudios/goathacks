@@ -12,6 +12,7 @@ export const route = sqliteTable("route", {
 
 export const routeRelations = relations(route, ({ many }) => ({
   stops: many(stop),
+  sessions: many(busSession),
 }));
 
 export const stop = sqliteTable("stop", {

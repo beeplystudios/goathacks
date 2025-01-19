@@ -77,6 +77,7 @@ export const appRouter = router({
 
       const routes: { route: string; routeColor: string }[] = [];
 
+    
       result.forEach((item) => {
         item.route?.stops.forEach((stop) => {
           stops.push({
