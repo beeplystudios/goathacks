@@ -12,6 +12,7 @@ export const route = sqliteTable("route", {
 
 export const routeRelations = relations(route, ({ many }) => ({
   stops: many(stop),
+  sessions: many(busSession),
 }));
 
 export const stop = sqliteTable("stop", {
@@ -41,7 +42,7 @@ export const busSession = sqliteTable("busSession", {
     .unique()
     .$defaultFn(() => createId()),
   driverId: text("driverId").unique(),
-  routeId: text("routeId"),
+  routeId: text("routeId").references(() => route.id, { onDelete: "cascade", onUpdate: "cascade" }),
   lat: real("lat"),
   lon: real("lon"),
 });
