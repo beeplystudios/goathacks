@@ -1,9 +1,13 @@
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { BusRouteType } from "../constants/BusData";
+import { useState } from "react";
+import CustomModal from "./CustomModal";
 
 const BusRoute: React.FC<BusRouteType> = ({ route, routeColor }) => {
+  const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View
+    <Pressable
+      onPress={() => setModalVisible(true)}
       style={{
         padding: 12,
         borderColor: "rgba(255,255,255,0.2)",
@@ -11,8 +15,21 @@ const BusRoute: React.FC<BusRouteType> = ({ route, routeColor }) => {
         width: "100%",
         flexDirection: "row",
       }}>
+      <CustomModal
+        isVisible={modalVisible}
+        onClose={() => {
+          setModalVisible(false);
+        }}>
+        <Text style={{ fontWeight: "bold", color: "white", fontSize: 20 }}>
+          {route}
+        </Text>
+      </CustomModal>
       <View
-        style={{ flex: 2, flexDirection: "row", justifyContent: "flex-end" }}>
+        style={{
+          width: "25%",
+          flexDirection: "row",
+          justifyContent: "flex-end",
+        }}>
         <View
           style={{
             backgroundColor: routeColor,
@@ -32,7 +49,7 @@ const BusRoute: React.FC<BusRouteType> = ({ route, routeColor }) => {
         }}>
         <Text style={{ color: "white", fontWeight: "medium" }}>All good!</Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
