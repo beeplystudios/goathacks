@@ -19,7 +19,6 @@ const InnerLayout = () => {
         httpBatchLink({
           url: `${process.env.EXPO_PUBLIC_API_URL}/trpc`,
           async headers() {
-            console.log(isSignedIn);
             const token = await getToken();
             return {
               Authorization: !isSignedIn ? undefined : `Bearer ${token}`,

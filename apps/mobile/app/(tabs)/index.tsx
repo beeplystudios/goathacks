@@ -79,6 +79,7 @@ export default function App() {
             const theseStops = activeStops.filter(
               (s) => s.route === route.route
             );
+            if (theseStops.length < 2) return <View />;
             return (
               <MapViewDirections
                 origin={theseStops[0].coords}
