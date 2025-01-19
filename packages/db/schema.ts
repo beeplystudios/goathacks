@@ -20,7 +20,7 @@ export const stop = sqliteTable("stop", {
     .unique()
     .$defaultFn(() => createId()),
   name: text("name"),
-  index: integer("index"),
+  index: integer("index").notNull(),
   lat: real("lat"),
   lon: real("lon"),
   routeId: text("routeId")
