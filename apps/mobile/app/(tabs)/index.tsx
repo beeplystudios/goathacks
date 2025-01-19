@@ -60,7 +60,7 @@ export default function App() {
   }, [selectedRoute]);
 
   return (
-    <View className="flex-1 gap-4 overflow-hidden items-center justify-center bg-gray-800">
+    <View className="flex-1 gap-4 overflow-hidden items-center justify-center bg-neutral-500">
       <MapView
         style={styles.map}
         showsUserLocation
@@ -70,8 +70,7 @@ export default function App() {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }
-        }
-      >
+        }>
         {busStops.map(
           (stop, index) =>
             stop.route === selectedRoute && (
