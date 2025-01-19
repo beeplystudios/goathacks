@@ -27,7 +27,7 @@ const AllRouteColors = [
 ];
 
 export const getIthRouteColor = (i: number) => {
-  return AllRouteColors[(i + 7) % AllRouteColors.length];
+  return AllRouteColors[i % AllRouteColors.length];
 };
 
 export interface BusStopType {
