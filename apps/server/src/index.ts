@@ -49,9 +49,11 @@ app.get("/routes", async (c) => {
   });
 
   return c.json(
-    data.map((route) =>
-      route.stops.map((stop) => ({ lat: stop.lat, lng: stop.lon }))
-    )
+    data.map((route) => ({
+      name: route.name,
+      id: route.id,
+      stops: route.stops.map((stop) => ({ lat: stop.lat, lng: stop.lon }))
+    }))
   );
 });
 
