@@ -98,11 +98,13 @@ export default function App() {
           />
         )}
       </MapView>
-      <ScrollView className="absolute bg-neutral-700 w-full bottom-0 h-[20%] rounded-t-lg">
-        {busRoutes.map((r, i) => (
-          <BusRoute {...r} key={i} />
-        ))}
-      </ScrollView>
+      {busRoutes.length > 0 && (
+        <ScrollView className="absolute bg-neutral-700 w-full bottom-0 h-[20%] rounded-t-lg">
+          {busRoutes.map((r, i) => (
+            <BusRoute {...r} key={i} />
+          ))}
+        </ScrollView>
+      )}
     </>
   );
 }
