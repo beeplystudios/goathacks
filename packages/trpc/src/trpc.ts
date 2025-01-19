@@ -1,12 +1,19 @@
 import { initTRPC } from "@trpc/server";
 import SuperJSON from "superjson";
 import { type Context as HonoContext } from "hono";
-import { db } from  "@goathacks/db"
+import { db } from "@goathacks/db";
+import { createClerkClient } from "@clerk/backend";
+
+const clerkClient = createClerkClient({
+  secretKey: process.env.CLERK_SECRET_KEY,
+  publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
+});
 
 export const createTRPCContext = (ctx: HonoContext) => {
   return {
     honoCtx: ctx,
-    db: db
+    db: db,
+    clerk: clerkClient,
   };
 };
 
