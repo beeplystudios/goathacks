@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@goathacks/trpc": "*",
+    "@goathacks/db": "*",
     "@hono/node-server": "^1.13.7",
     "@trpc/server": "^11.0.0-rc.700",
     "dotenv": "^16.4.7",
