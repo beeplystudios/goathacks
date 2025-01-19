@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { LatLng, Marker } from "react-native-maps";
 import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import useLocation from "../../hooks/useLocation";
 import { LocationObjectCoords } from "expo-location";
@@ -14,6 +14,7 @@ import BusRoute from "../../components/BusRoute";
 import { useAuth } from "@clerk/clerk-expo";
 import { Redirect } from "expo-router";
 import { trpc } from "../../lib/trpc";
+// import BusIcon from "../../assets/images/bus-icon.png";
 
 export default function App() {
   const { coords } = useLocation();
@@ -63,8 +64,7 @@ export default function App() {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }
-        }
-      >
+        }>
         {activeStops?.map((stop, index) => (
           <Marker
             key={`coordinate_${index}`}
@@ -74,6 +74,18 @@ export default function App() {
             )}
           />
         ))}
+        {busLocations?.map((bus, index) =>
+          bus ? (
+            <Marker
+              key={`bus_${index}`}
+              coordinate={bus as LatLng}
+
+              // image={BusIcon}
+            />
+          ) : (
+            <View />
+          )
+        )}
         {process.env.EXPO_PUBLIC_MAPS_API_KEY &&
           activeStops.length > 0 &&
           busRoutes.map((route, i) => {
