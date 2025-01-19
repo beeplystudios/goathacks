@@ -1,6 +1,6 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import ThemedView from "../../components/ThemedView";
-import { trpc } from "../../lib/trpc";
+import ThemedView from "../../../components/ThemedView";
+import { trpc } from "../../../lib/trpc";
 import { StyleSheet, View, Text, Button, Pressable } from "react-native";
 import { verifyInstallation } from "nativewind";
 import { Linking, Platform } from "react-native";
@@ -29,10 +29,12 @@ export default function TabTwoScreen() {
   verifyInstallation();
 
   return (
-    <SafeAreaView className="">
+    <SafeAreaView className="bg-neutral-800 h-screen">
       <View className="p-8">
-        <View className="w-full bg-neutral-50 p-4 rounded-md border-neutral-200 border-[0.0125rem] flex flex-col gap-2">
-          <Text className="text-2xl font-semibold">Good Morning</Text>
+        <View className="w-full bg-neutral-500 p-4 rounded-md border-neutral-200 border-[0.0125rem] flex flex-col gap-2">
+          <Text className="text-2xl font-semibold text-white">
+            Good Morning
+          </Text>
           <Link
             href="/check-in"
             className="bg-[#5DA8EC] flex text-center items-center p-2 rounded-md border-[0.0125rem] "
@@ -41,7 +43,7 @@ export default function TabTwoScreen() {
           </Link>
           <Link
             href={{
-              pathname: "/driver/route/[id]/go",
+              pathname: "/route/[id]/go",
               params: {
                 id: "cm62ksg1g00000cjl2k9cd0z",
               },

@@ -8,7 +8,7 @@ export default function CheckIn() {
     <BarcodeScanner
       onScan={(evt) => {
         router.replace({
-          pathname: "/driver/route/[id]",
+          pathname: "/route/[id]",
           params: {
             id: evt.data,
           },
