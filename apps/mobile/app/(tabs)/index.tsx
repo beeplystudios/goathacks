@@ -58,7 +58,8 @@ export default function App() {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }
-        }>
+        }
+      >
         {activeStops?.map((stop, index) => (
           <Marker
             key={`coordinate_${index}`}
@@ -69,7 +70,7 @@ export default function App() {
           />
         ))}
         {busLocations?.map((bus, index) =>
-          bus ? (
+          bus.latitude !== null && bus.longitude !== null ? (
             <Marker
               key={`bus_${index}`}
               coordinate={bus as LatLng}
